@@ -1,2 +1,1 @@
-# phaser-ts
-Phaser with Typescript
+# Phaser 3 + TypeScript
