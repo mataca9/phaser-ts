@@ -50,6 +50,7 @@ export class BootScene extends Phaser.Scene {
     });
 
     this.loadAssets();
+    this.loadKeys();
   }
 
   /**
@@ -59,9 +60,15 @@ export class BootScene extends Phaser.Scene {
    */
   private loadAssets() {
     // Load sample assets
-
-    // Source: Open Game Art
-    this.load.image('man', 'assets/character.png');
+    this.load.image('background', 'assets/background.jpg');
+    this.load.image('hero', 'assets/hero.png');
+    this.load.image('monster', 'assets/monster.png');
+    this.load.image('wall', 'assets/wall.png');
+    this.load.image('heart', 'assets/heart.png');
+    this.load.image('bullet', 'assets/black.png');
+    this.load.image('cannon', 'assets/black.png');
   }
 
+  private loadKeys() {
+  }
 }
