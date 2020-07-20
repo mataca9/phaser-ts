@@ -21,12 +21,30 @@ export class BootScene extends Phaser.Scene {
     const progressBarHeight = 100;
     const progressBarWidth = 400;
 
-    const progressBarContainer = this.add.rectangle(halfWidth, halfHeight, progressBarWidth, progressBarHeight, 0x000000);
-    const progressBar = this.add.rectangle(halfWidth + 20 - progressBarContainer.width * 0.5, halfHeight, 10, progressBarHeight - 20, 0x888888);
+    const progressBarContainer = this.add.rectangle(
+      halfWidth,
+      halfHeight,
+      progressBarWidth,
+      progressBarHeight,
+      0x000000
+    );
+    const progressBar = this.add.rectangle(
+      halfWidth + 20 - progressBarContainer.width * 0.5,
+      halfHeight,
+      10,
+      progressBarHeight - 20,
+      0x888888
+    );
 
-    const loadingText = this.add.text(halfWidth - 75, halfHeight - 100, 'Loading...').setFontSize(24);
-    const percentText = this.add.text(halfWidth - 25, halfHeight, '0%').setFontSize(24);
-    const assetText = this.add.text(halfWidth - 25, halfHeight + 100, '').setFontSize(24);
+    const loadingText = this.add
+      .text(halfWidth - 75, halfHeight - 100, 'Loading...')
+      .setFontSize(24);
+    const percentText = this.add
+      .text(halfWidth - 25, halfHeight, '0%')
+      .setFontSize(24);
+    const assetText = this.add
+      .text(halfWidth - 25, halfHeight + 100, '')
+      .setFontSize(24);
 
     this.load.on('progress', (value) => {
       progressBar.width = (progressBarWidth - 30) * value;
@@ -69,6 +87,5 @@ export class BootScene extends Phaser.Scene {
     this.load.image('cannon', 'assets/black.png');
   }
 
-  private loadKeys() {
-  }
+  private loadKeys() {}
 }

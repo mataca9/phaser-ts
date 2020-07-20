@@ -2,19 +2,21 @@ import { take, delay, tap } from 'rxjs/operators';
 import { getGameWidth, getGameHeight } from '../helpers';
 import { Hero } from '../models/hero';
 import { Monster } from '../models/monster';
+import { HeroPlatform } from '../models/hero-platform';
 
 const sceneConfig: Phaser.Types.Scenes.SettingsConfig = {
   active: false,
   visible: false,
-  key: 'Game',
+  key: 'Game2',
 };
 
-export class GameScene extends Phaser.Scene {
+export class Game2Scene extends Phaser.Scene {
   public level = 1;
   public levelText: Phaser.GameObjects.Text;
-  private player: Hero;
+  private player: HeroPlatform;
   private monsters: Monster[] = [];
   private walls: Phaser.Physics.Arcade.Sprite[] = [];
+  private platforms: Phaser.Physics.Arcade.Sprite[] = [];
 
   private center = {
     x: 0,
@@ -37,7 +39,7 @@ export class GameScene extends Phaser.Scene {
       .setOrigin(0, 0);
 
     // player
-    this.player = new Hero(this);
+    this.player = new HeroPlatform(this);
     this.player.$onDeath
       .pipe(
         tap(() => this.levelText.setText('You died. :(')),
@@ -52,6 +54,14 @@ export class GameScene extends Phaser.Scene {
     this.addWall(-400, -300, 800, 1);
     this.addWall(400, -300, 1, 600);
     this.addWall(-400, 300, 800, 1);
+
+    // platforms
+    this.addPlatform(100, 50, 50);
+    this.addPlatform(200, 100, 100);
+    this.addPlatform(350, 150, 150);
+    this.addPlatform(550, 200, 150);
+    this.addPlatform(350, 250, 150);
+    this.addPlatform(200, 300, 100);
 
     // fixed collision
     this.physics.add.collider(this.player.sprite, this.walls);
@@ -76,10 +86,10 @@ export class GameScene extends Phaser.Scene {
 
   public start() {
     this.levelText.setText(`Level: ${this.level}`);
-    this.addMonster();
-    this.addMonster();
-    this.addMonster();
-    this.addMonster();
+    // this.addMonster();
+    // this.addMonster();
+    // this.addMonster();
+    // this.addMonster();
   }
 
   public update() {
@@ -111,10 +121,16 @@ export class GameScene extends Phaser.Scene {
     });
 
     this.player.update();
-    if (this.monsters.length === 0) {
-      this.level++;
-      this.start();
-    }
+  }
+
+  addPlatform(x: number, y: number, w: number) {
+    this.walls.push(
+      this.physics.add
+        .sprite(this.center.x - 400 + x, this.center.y + 300 - y, 'wall')
+        .setOrigin(0, 0)
+        .setScale(w, 10)
+        .setImmovable()
+    );
   }
 
   addWall(x: number, y: number, w: number, h: number) {

@@ -1,14 +1,14 @@
 {
-  "name": "phaser3-typescript-rpg",
+  "name": "phaser3-sandbox",
   "version": "1.0.0",
-  "description": "A sample rpg project using Phaser 3 and TypeScript",
+  "description": "A sandbox project using Phaser 3 and TypeScript",
   "main": "src/main.ts",
   "author": "Matheus Streb",
   "license": "MIT",
   "private": false,
   "scripts": {
     "build": "webpack",
-    "dev": "webpack-dev-server"
+    "start": "webpack-dev-server"
   },
   "dependencies": {
     "phaser": "^3.20.1",

@@ -8,10 +8,10 @@ export class Hero {
     attack = 1;
     defense = 1;
     speed = 200;
-    sprite: Phaser.Physics.Arcade.Sprite;
     hearts: Phaser.GameObjects.Sprite[] = [];
-    scene: Phaser.Scene;
     cursorKeys: Phaser.Types.Input.Keyboard.CursorKeys;
+    sprite: Phaser.Physics.Arcade.Sprite;
+    scene: Phaser.Scene;
 
     damageDelay = 500;
     damageOnDelay = false;
@@ -23,7 +23,7 @@ export class Hero {
     playerBullets: Phaser.Physics.Arcade.Sprite[] = [];
     shootOnDelay = false;
 
-    private onDeathSubject = new Subject();
+    onDeathSubject = new Subject();
     $onDeath = this.onDeathSubject.asObservable();
 
     constructor(scene: Phaser.Scene, id?: string) {
@@ -125,7 +125,7 @@ export class Hero {
         }
     }
 
-    private loseHeart() {
+    loseHeart() {
         const heart = this.hearts.pop();
         this.scene.tweens.add({
             targets: heart,
