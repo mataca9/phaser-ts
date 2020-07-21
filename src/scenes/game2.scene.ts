@@ -35,11 +35,19 @@ export class Game2Scene extends Phaser.Scene {
 
     // background
     this.add
-      .image(this.center.x - 400, this.center.y - 300, 'background')
-      .setOrigin(0, 0);
+      .image(0,0, 'background')
+      .setOrigin(0, 0)
+      .setScale(getGameWidth(this) * 2, getGameHeight(this));
 
     // player
     this.player = new HeroPlatform(this);
+    this.player.sprite.x = 50;
+    this.player.sprite.y = 100;
+
+    // camera
+    this.cameras.main.setBounds(0, 0, getGameWidth(this) * 2, getGameHeight(this) + 100);
+    this.cameras.main.startFollow(this.player.sprite);
+
     this.player.$onDeath
       .pipe(
         tap(() => this.levelText.setText('You died. :(')),
@@ -49,19 +57,31 @@ export class Game2Scene extends Phaser.Scene {
       )
       .subscribe(() => this.scene.start('MainMenu'));
 
-    // walls (800x600)
-    this.addWall(-400, -300, 1, 600);
-    this.addWall(-400, -300, 800, 1);
-    this.addWall(400, -300, 1, 600);
-    this.addWall(-400, 300, 800, 1);
+    //floor
+    getGameWidth(this)
+    this.addPlatform(0, 5, getGameWidth(this) * 2);
 
     // platforms
-    this.addPlatform(100, 50, 50);
-    this.addPlatform(200, 100, 100);
-    this.addPlatform(350, 150, 150);
-    this.addPlatform(550, 200, 150);
-    this.addPlatform(350, 250, 150);
-    this.addPlatform(200, 300, 100);
+    this.addPlatform(150, 50, 50);
+    this.addPlatform(250, 100, 100);
+    this.addPlatform(400, 150, 150);
+    this.addPlatform(600, 200, 150);
+    this.addPlatform(400, 250, 150);
+    this.addPlatform(250, 300, 100);
+
+    // platforms
+    this.addPlatform(150 + getGameWidth(this), 50, 50);
+    this.addPlatform(250 + getGameWidth(this), 100, 100);
+    this.addPlatform(400 + getGameWidth(this), 150, 150);
+    this.addPlatform(600 + getGameWidth(this), 200, 150);
+    this.addPlatform(400 + getGameWidth(this), 250, 150);
+    this.addPlatform(250 + getGameWidth(this), 300, 100);
+
+    // level text
+    this.levelText = this.add
+      .text(100, 50, `Level: ${this.level}`, { fill: '#FFFFFF' })
+      .setFontSize(24)
+      .setScrollFactor(0, 0);
 
     // fixed collision
     this.physics.add.collider(this.player.sprite, this.walls);
@@ -74,11 +94,6 @@ export class Game2Scene extends Phaser.Scene {
       right: Phaser.Input.Keyboard.KeyCodes.D,
       space: Phaser.Input.Keyboard.KeyCodes.SPACE,
     });
-
-    // level text
-    this.levelText = this.add
-      .text(100, 50, `Level: ${this.level}`, { fill: '#FFFFFF' })
-      .setFontSize(24);
 
     // start
     this.start();
@@ -126,7 +141,7 @@ export class Game2Scene extends Phaser.Scene {
   addPlatform(x: number, y: number, w: number) {
     this.walls.push(
       this.physics.add
-        .sprite(this.center.x - 400 + x, this.center.y + 300 - y, 'wall')
+        .sprite(x, getGameHeight(this) - y, 'wall')
         .setOrigin(0, 0)
         .setScale(w, 10)
         .setImmovable()

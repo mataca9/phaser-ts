@@ -33,8 +33,9 @@ export class GameScene extends Phaser.Scene {
 
     // background
     this.add
-      .image(this.center.x - 400, this.center.y - 300, 'background')
-      .setOrigin(0, 0);
+      .image(0, 0, 'background')
+      .setOrigin(0, 0)
+      .setScale(getGameWidth(this), getGameHeight(this))
 
     // player
     this.player = new Hero(this);
@@ -48,10 +49,10 @@ export class GameScene extends Phaser.Scene {
       .subscribe(() => this.scene.start('MainMenu'));
 
     // walls (800x600)
-    this.addWall(-400, -300, 1, 600);
-    this.addWall(-400, -300, 800, 1);
-    this.addWall(400, -300, 1, 600);
-    this.addWall(-400, 300, 800, 1);
+    // this.addWall(-400, -300, 1, 600);
+    // this.addWall(-400, -300, 800, 1);
+    // this.addWall(400, -300, 1, 600);
+    // this.addWall(-400, 300, 800, 1);
 
     // fixed collision
     this.physics.add.collider(this.player.sprite, this.walls);
