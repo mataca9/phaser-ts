@@ -119,8 +119,9 @@ export class Hero {
     const distanceBetween = 20;
     for (let i = 0; i < this.hp; i++) {
       this.hearts.push(
-        this.scene.add.sprite(275 + i * distanceBetween, 60, 'heart')
-            .setScrollFactor(0, 0)
+        this.scene.add
+          .sprite(275 + i * distanceBetween, 60, 'heart')
+          .setScrollFactor(0, 0)
       );
     }
   }
@@ -135,13 +136,17 @@ export class Hero {
       this.loseHeart();
       this.damageOnDelay = true;
 
-      const damageInterval = setInterval(() => {
-        this.sprite.setAlpha(this.sprite.alpha ? 0 : 100);
-      }, 50);
-      setTimeout(() => {
-        clearInterval(damageInterval);
-        this.damageOnDelay = false;
-      }, this.damageDelay);
+      this.scene.tweens.add({
+        targets: this.sprite,
+        alpha: 0,
+        ease: 'Cubic.easeOut',
+        duration: this.damageDelay,
+        repeat: 5,
+        yoyo: true,
+        onComplete: () => {
+          this.damageOnDelay = false;
+        },
+      });
     }
   }
 

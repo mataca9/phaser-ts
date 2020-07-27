@@ -7,6 +7,11 @@ const sceneConfig: Phaser.Types.Scenes.SettingsConfig = {
   active: false,
   visible: false,
   key: 'Game',
+  physics: {
+    arcade: {
+      debug: true,
+    },
+  },
 };
 
 export class GameScene extends Phaser.Scene {
@@ -35,7 +40,7 @@ export class GameScene extends Phaser.Scene {
     this.add
       .image(0, 0, 'background')
       .setOrigin(0, 0)
-      .setScale(getGameWidth(this), getGameHeight(this))
+      .setScale(getGameWidth(this), getGameHeight(this));
 
     // player
     this.player = new Hero(this);
@@ -49,10 +54,10 @@ export class GameScene extends Phaser.Scene {
       .subscribe(() => this.scene.start('MainMenu'));
 
     // walls (800x600)
-    // this.addWall(-400, -300, 1, 600);
-    // this.addWall(-400, -300, 800, 1);
-    // this.addWall(400, -300, 1, 600);
-    // this.addWall(-400, 300, 800, 1);
+    this.addWall(-400, -300, 1, 600);
+    this.addWall(-400, -300, 800, 1);
+    this.addWall(400, -300, 1, 600);
+    this.addWall(-400, 300, 800, 1);
 
     // fixed collision
     this.physics.add.collider(this.player.sprite, this.walls);

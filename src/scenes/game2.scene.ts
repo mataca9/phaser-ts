@@ -3,6 +3,7 @@ import { getGameWidth, getGameHeight } from '../helpers';
 import { Hero } from '../models/hero';
 import { Monster } from '../models/monster';
 import { HeroPlatform } from '../models/hero-platform';
+import { Monster2 } from '../models/monster2';
 
 const sceneConfig: Phaser.Types.Scenes.SettingsConfig = {
   active: false,
@@ -35,7 +36,7 @@ export class Game2Scene extends Phaser.Scene {
 
     // background
     this.add
-      .image(0,0, 'background')
+      .image(0, 0, 'background')
       .setOrigin(0, 0)
       .setScale(getGameWidth(this) * 2, getGameHeight(this));
 
@@ -45,7 +46,12 @@ export class Game2Scene extends Phaser.Scene {
     this.player.sprite.y = 100;
 
     // camera
-    this.cameras.main.setBounds(0, 0, getGameWidth(this) * 2, getGameHeight(this) + 100);
+    this.cameras.main.setBounds(
+      0,
+      0,
+      getGameWidth(this) * 2,
+      getGameHeight(this) + 100
+    );
     this.cameras.main.startFollow(this.player.sprite);
 
     this.player.$onDeath
@@ -58,7 +64,7 @@ export class Game2Scene extends Phaser.Scene {
       .subscribe(() => this.scene.start('MainMenu'));
 
     //floor
-    getGameWidth(this)
+    getGameWidth(this);
     this.addPlatform(0, 5, getGameWidth(this) * 2);
 
     // platforms
@@ -101,7 +107,7 @@ export class Game2Scene extends Phaser.Scene {
 
   public start() {
     this.levelText.setText(`Level: ${this.level}`);
-    // this.addMonster();
+    this.addMonster();
     // this.addMonster();
     // this.addMonster();
     // this.addMonster();
@@ -167,7 +173,7 @@ export class Game2Scene extends Phaser.Scene {
       this.center.y - 300 + 15,
       this.center.y + 300 - 15
     );
-    const monster = new Monster(this, x, y);
+    const monster = new Monster2(this, x, y);
     monster.setTarget(this.player);
     monster.hp = this.level;
     monster.speed = monster.speed * this.level;
