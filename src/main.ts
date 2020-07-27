@@ -11,9 +11,9 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
   scene: Scenes,
   physics: {
     default: 'arcade',
-    arcade: {
-      debug: false,
-    },
+    // arcade: {
+    //   debug: false,
+    // },
   },
   parent: 'game',
   backgroundColor: '#000000',

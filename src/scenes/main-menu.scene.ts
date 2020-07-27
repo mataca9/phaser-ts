@@ -24,5 +24,9 @@ export class MainMenuScene extends Phaser.Scene {
     new MenuButton(this, 100, 250, 'Start platformer', () => {
       this.scene.start('Game2');
     });
+
+    // new MenuButton(this, 100, 350, 'Start pong', () => {
+    this.scene.start('Game3');
+    // });
   }
 }
